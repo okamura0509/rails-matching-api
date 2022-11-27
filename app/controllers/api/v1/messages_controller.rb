@@ -1,9 +1,9 @@
 class Api::V1::MessagesController < ApplicationController
     def create
-        message = Message.new(message_paramas)
+        messages = Message.new(message_paramas)
 
         if messages.save
-            render json: { status:200 , message: message }
+            render json: { status:200 , messages: messages }
         else
             render json: { status: 500, message: "メッセージの送信に失敗しました。"}
         end
