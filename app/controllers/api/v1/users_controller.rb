@@ -2,9 +2,8 @@ class Api::V1::UsersController < ApplicationController
     before_action :set_user, only: %i[show update]
 
     def index
-      # 都道府県が同じで性別の異なるユーザーを取得（自分以外）
-      users = User.where(prefecture: current_api_v1_user.prefecture).where.not(id: current_api_v1_user.id, gender: current_api_v1_user.gender).order("created_at DESC")
-      render json: { status: 200, users: users }
+      users = User.all();
+      render json: { status: 200, users: users, params: params }
     end
 
     def show
@@ -22,6 +21,12 @@ class Api::V1::UsersController < ApplicationController
       else
         render json: { status: 500, message: "更新に失敗しました" }
       end
+    end
+
+    def search
+        user_params.to_yaml
+        users = User.yield_self{|scope| user_params[:prefecture] != nil ? scope.where(prefecture: user_params[:prefecture]) : scope }.yield_self{|scope| user_params[:name] != nil ? scope.where("name LIKE ?" ,"%#{user_params[:name]}%") : scope}.order("created_at DESC")
+        render json: { status: 200, users: users , params: user_params }
     end
 
     private
