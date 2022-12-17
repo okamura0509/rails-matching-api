@@ -15,6 +15,9 @@ class User < ActiveRecord::Base
   has_many :passive_likes, through: :likes_to, source: :from_user
   has_many :chat_room_users
   has_many :chat_rooms, through: :chat_room_users
+  has_many :workers, class_name: "Request", foreign_key: :worker_id, dependent: :destroy
+  has_many :requests, class_name: "Request", foreign_key: :requester_id, dependent: :destroy
+
 
   has_many :messages
 end
