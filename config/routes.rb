@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       resources :likes, only: %i[index create]
       resources :chat_rooms, only: %i[index show]
       resources :messages, only: %i[create]
+      resources :requests, only: %i[index]
       resources :users do
         member do
           get :show, action: :show
