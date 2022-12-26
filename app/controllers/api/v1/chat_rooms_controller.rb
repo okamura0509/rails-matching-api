@@ -3,7 +3,6 @@ class Api::V1::ChatRoomsController < ApplicationController
 
     def index
       chat_rooms = []
-
       current_api_v1_user.chat_rooms.order("created_at DESC").each do |chat_room|
         # 部屋の情報（相手のユーザーは誰か、最後に送信されたメッセージはどれか）をJSON形式で作成
         chat_rooms << {
