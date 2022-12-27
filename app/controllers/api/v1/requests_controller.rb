@@ -12,11 +12,13 @@ class Api::V1::RequestsController < ApplicationController
     end
 
     def create
-        messages = Message.new(message_paramas)
-
-        if messages.save
-            render json: { status:200 , messages: messages }
+        requests = Request.new(request_paramas)
+        p requests
+        if requests.save
+            p requests
+            render json: { status:200 , messages: requests }
         else
+            p '失敗'
             render json: { status: 500, message: "メッセージの送信に失敗しました。"}
         end
     end
